@@ -4,7 +4,10 @@
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+Ignacio Fernández León - Nachofdez2708
+Elena Casellas Jimenez - 
+Javier De La Hoz Herrero - 
+Lucas Cezar Lopez-Sors - 
 
 ## Objetivos del trabajo
 
