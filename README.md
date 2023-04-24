@@ -4,9 +4,12 @@
 
 ## Integrantes del equipo
 
-Ignacio Fernández León - Nachofdez2708.
+Ignacio Fernández León - Nachofdez2708
+
 Elena Casellas Jimenez - 
+
 Javier De La Hoz Herrero - 
+
 Lucas Cezar Lopez-Sors - 
 
 ## Objetivos del trabajo
