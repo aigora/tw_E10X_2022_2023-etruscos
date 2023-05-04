@@ -10,7 +10,7 @@ Elena Casellas Jimenez - elenacasellas
 
 Javier De La Hoz Herrero - 
 
-Lucas Cezar Lopez-Sors - 
+Lucas Cezar Lopez-Sors - lucasceezar
 
 ## Objetivos del trabajo
 
