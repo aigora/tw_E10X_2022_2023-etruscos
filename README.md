@@ -1,6 +1,6 @@
 # RED ELÉCTRICA ESPAÑOLA
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+[Realizar un programa que permita mediante la interacción del usuario a través de un menu de opciones que permita extraer al usuario los datos seleccionados. Y finalmente, extrarer esos datos en formato de un nuevo fichero.]
 
 ## Integrantes del equipo
 
@@ -17,4 +17,4 @@ Lucas Cezar Lopez-Sors - [(lucasceezar)](https://github.com/lucasceezar)
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+[El objetivo del trabajo es analizar los datos de generación de energía eléctrica en España proporcionados por la Red Eléctrica Española. Visualizar los datos de generación de energía eléctrica de España, realizar los pertinentes cálculos estadísticos, relacionar los datos entre ellos utilizancdo un fichero para su lectura y crear nuevos ficheros para guardar nuevos datos.]
