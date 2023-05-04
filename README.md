@@ -1,4 +1,4 @@
-# [RED ELÉCTRICA ESPAÑOLA]
+# RED ELÉCTRICA ESPAÑOLA
 
 [Descripción breve del proyecto a realizar (2-3 frases).]
 
@@ -8,7 +8,7 @@ Ignacio Fernández León - Nachofdez2708
 
 Elena Casellas Jimenez - elenacasellas
 
-Javier De La Hoz Herrero - 
+Javier De La Hoz Herrero - [(Javier de la Hoz)](https://github.com/Javierdelahoz4)
 
 Lucas Cezar Lopez-Sors - lucasceezar
 
