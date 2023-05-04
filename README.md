@@ -4,15 +4,15 @@ Realizar un programa que permita mediante la interacción del usuario a través 
 
 ## Integrantes del equipo
 
-Ignacio Fernández León - [(Nachofdz2708)](https://github.com/Nachofdz2708)
+Ignacio Fernández León - *[(Nachofdz2708)](https://github.com/Nachofdz2708)*
 
 
-Elena Casellas Jimenez - [(elenacasellas)](https://github.com/elenacasellas)
+Elena Casellas Jimenez - *[(elenacasellas)](https://github.com/elenacasellas)*
 
 
-Javier De La Hoz Herrero - [(Javierdelahoz4)](https://github.com/Javierdelahoz4)
+Javier De La Hoz Herrero - *[(Javierdelahoz4)](https://github.com/Javierdelahoz4)*
 
-Lucas Cezar Lopez-Sors - [(lucasceezar)](https://github.com/lucasceezar)
+Lucas Cezar Lopez-Sors - *[(lucasceezar)](https://github.com/lucasceezar)*
 
 
 ## Objetivos del trabajo
