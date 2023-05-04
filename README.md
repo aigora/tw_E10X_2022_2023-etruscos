@@ -4,13 +4,16 @@
 
 ## Integrantes del equipo
 
-Ignacio Fernández León - Nachofdez2708
+Ignacio Fernández León - [(Nachofdz2708)](https://github.com/Nachofdz2708)
 
-Elena Casellas Jimenez - elenacasellas
 
-Javier De La Hoz Herrero - [(Javier de la Hoz)](https://github.com/Javierdelahoz4)
+Elena Casellas Jimenez - [(elenacasellas)](https://github.com/elenacasellas)
 
-Lucas Cezar Lopez-Sors - lucasceezar
+
+Javier De La Hoz Herrero - [(Javierdelahoz4)](https://github.com/Javierdelahoz4)
+
+Lucas Cezar Lopez-Sors - [(lucasceezar)](https://github.com/lucasceezar)
+
 
 ## Objetivos del trabajo
 
