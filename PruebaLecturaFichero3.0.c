@@ -21,7 +21,7 @@ int main() {
                 }
            } */ //queria asignarles valor 0 a todos porque en la lectura se inventa los 3 o 4 ultimos caracteres decimales
 
-    archivo = fopen("generacion_por_tecnologias_21_22_puntos.csv", "r");
+    archivo = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv", "r");
 
 //ABRIR fichero
     if (archivo == NULL) {
@@ -34,13 +34,13 @@ int main() {
       fgets(linea, 200, archivo);
     }
 
-//Almacena los datos en una estructura, para cada fila empieza leyendo el nombre como char y a continuación lee los numeros ignorando las comillas
+//Almacena los datos en una estructura, para cada fila empieza leyendo el nombre como char y a continuaciÃ³n lee los numeros ignorando las comillas
     for (i = 1; i < MAX_REGISTROS; i++) {
         if(i == 8){
         fgets(linea, 2000, archivo);
         }
             //printf("%d", i);
-//Primero lee el tipo de generación
+//Primero lee el tipo de generaciÃ³n
             if (fscanf(archivo, "%[^,],", &registros[i].tipo) != 1) {
                 printf("Error al leer el nombre.\n");
                 return 1;
