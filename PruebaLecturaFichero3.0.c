@@ -49,7 +49,7 @@ int main() {
             //printf("\nok2\n");
 //Ahora para cada tipo, lee los datos tipo float
             for (j = 0; j < MESES; j++) {
-                if (fscanf(archivo, "\"%f\",", &registros[i].valores[j]) != 1) {
+                if (fscanf(archivo, "%f,", &registros[i].valores[j]) != 1) {
                     printf("Error al leer el numero: %d\n", j);
                     return 1;
                 }
