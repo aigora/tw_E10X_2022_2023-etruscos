@@ -32,7 +32,7 @@ void obtener_tipos_energia(char* nombre_archivo, char tipos_energia[][MAX_LONGIT
 
 void procesar_tipos_energia(char tipos_energia[][MAX_LONGITUD_LINEA], int num_tipos_energia) {
     for (int i = 0; i < num_tipos_energia; i++) {
-        printf("%s\n", tipos_energia[i]);
+        printf("%i.%s\n", i + 1, tipos_energia[i]);
     }
 }
 
