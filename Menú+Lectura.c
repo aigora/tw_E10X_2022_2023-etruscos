@@ -26,6 +26,7 @@ void imprimir_tipos_energia(char tipos_energia[][MAX_LONGITUD_LINEA], int num_ti
 void mostrar_datos_numericos(char* nombre_archivo, int opcion);
 void ordenar_datos(Dato datos[], int n);
 void mostrar_meses(char *nombre_archivo);
+void media_mensual(int energia, Registro *registros);
 
 
 
@@ -60,6 +61,7 @@ int main() {
         }
     }
 
+
     int op, op1;
     char nombre_archivo[] = "generacion_por_tecnologias_21_22_puntos_simplificado.csv";
     char tipos_energia[MAX_LONGITUD_LINEA][MAX_LONGITUD_LINEA];
@@ -71,7 +73,7 @@ int main() {
     setlocale(LC_ALL, "");
 
     while (1) {
-        printf("Seleccione a que tipo de dato quiere acceder\n");
+        printf("\nSeleccione a que tipo de dato quiere acceder\n");
         printf("1.-Fecha\n2.-Tipo de energia\n3.-Año\n");
         printf("Ingrese el numero de su eleccion: ");
         scanf("%d", &op);
@@ -124,6 +126,7 @@ int main() {
                     switch (op1) {
                         case 1:
                             printf("Ha seleccionado la opción 2.1\n");
+                            media_mensual(opcion_energia, registros);
                             break;
                         case 2:
                             printf("Ha seleccionado la opción 2.2\n");
@@ -320,3 +323,15 @@ void mostrar_meses(char *nombre_archivo) {
     }
 }
 
+void media_mensual(int energia, Registro *registros){
+energia = energia-1;
+float resultado, aux1, aux2;
+int i=0;
+aux2=0;
+for(int x = 0; x < MESES-1; x++){
+    aux1 = registros[energia].valor[x] + aux2;
+    aux2 = aux1;
+}
+resultado = aux2/MESES;
+printf("La media mensual de %s es de: %f", registros[energia].tipo, resultado);
+}
