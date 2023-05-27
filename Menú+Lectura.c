@@ -125,7 +125,6 @@ int main() {
 
                     switch (op1) {
                         case 1:
-                            printf("Ha seleccionado la opción 2.1\n");
                             media_mensual(opcion_energia, registros);
                             break;
                         case 2:
