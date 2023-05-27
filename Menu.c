@@ -4,37 +4,20 @@
 #include <locale.h>
 
 #define MAX_LONGITUD_LINEA 1000
+#define MAX_COLS 25
+#define BUFF_SIZE 1048
 
-void obtener_tipos_energia(char* nombre_archivo, char tipos_energia[][MAX_LONGITUD_LINEA]) {
-    FILE *archivo = fopen(nombre_archivo, "r");
-    if (archivo == NULL) {
-        printf("No se pudo abrir el archivo.\n");
-        return;
-    }
+typedef struct {
+    float valor;
+    char mes[10];
+} Dato;
 
-    char linea[MAX_LONGITUD_LINEA];
-    char *token;
-    int num_tipos_energia = 0;
-    int num_lineas_leidas = 0;
+void obtener_tipos_energia(char* nombre_archivo, char tipos_energia[][MAX_LONGITUD_LINEA]);
+void imprimir_tipos_energia(char tipos_energia[][MAX_LONGITUD_LINEA], int num_tipos_energia);
+void mostrar_datos_numericos(char* nombre_archivo, int opcion);
+void ordenar_datos(Dato datos[], int n);
+void mostrar_meses(char *nombre_archivo);
 
-    while (fgets(linea, MAX_LONGITUD_LINEA, archivo) != NULL) {
-        if (num_lineas_leidas >= 5) {
-            token = strtok(linea, ",");
-            if (token != NULL) {
-                strcpy(tipos_energia[num_tipos_energia++], token);
-            }
-        }
-        num_lineas_leidas++;
-    }
-
-    fclose(archivo);
-}
-
-void procesar_tipos_energia(char tipos_energia[][MAX_LONGITUD_LINEA], int num_tipos_energia) {
-    for (int i = 0; i < num_tipos_energia; i++) {
-        printf("%i.%s\n", i + 1, tipos_energia[i]);
-    }
-}
 
 
 
@@ -86,11 +69,19 @@ int main() {
             case 2:
 
                 while (1) {
-                    printf("Elija una energia para evaluar:\n");
-        procesar_tipos_energia(tipos_energia, num_tipos_energia);
-        //aqui habria que escanear la opcion seleccionada
-        printf("Que desea hacer con esta energia:\n1.-Media mensual de gastos\n2.-Comparar 2 energias\n3.-Mostrar datos\n4.-Mes y año de menor gasto\n5.-Mes y año de mayor gasto\n6.-Salir");
-        scanf("%i", &op1);
+                    printf("\n\nElija una energia para evaluar:\n");
+                    imprimir_tipos_energia(tipos_energia, num_tipos_energia);
+
+                    int opcion_energia;
+                    scanf("%d", &opcion_energia);
+
+                    if (opcion_energia < 1 || opcion_energia > num_tipos_energia) {
+                    printf("Opción inválida.\n");
+                    return 0;
+                    }
+
+                    printf("Que desea hacer con esta energia:\n1.-Media mensual de gastos\n2.-Comparar 2 energias\n3.-Mostrar datos\n4.-Mes y año de menor gasto\n5.-Mes y año de mayor gasto\n6.-Salir\n");
+                    scanf("%i", &op1);
 
                     switch (op1) {
                         case 1:
@@ -100,7 +91,7 @@ int main() {
                             printf("Ha seleccionado la opción 2.2\n");
                             break;
                         case 3:
-                            printf("Ha seleccionado la opción 2.3\n");
+                            mostrar_datos_numericos(nombre_archivo, opcion_energia);
                             break;
                         case 4:
                             printf("Ha seleccionado la opción 2.4\n");
@@ -125,7 +116,7 @@ int main() {
                     //funcion para imprimir los años
                     //no tengo muy claro la parte de escanear a mano (mejor opciones numeradas?)
                     printf("A continuacion indique que desea evaluar de el año escogido:\n1.-Energia mas consumida en el año\n2.-Media de gastos anuales\n");
-                    printf("3.-Mes de mayor consumicion en el año\n4.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir");
+                    printf("3.-Mes de mayor consumicion en el año\n4.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir\n");
                     scanf("%i", &op1);
 
                     switch (op1) {
@@ -139,7 +130,7 @@ int main() {
                             printf("Ha seleccionado la opción 3.3\n");
                             break;
                         case 4:
-                            printf("Ha seleccionado la opción 3.4\n");
+                            mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
                             break;
                         case 5:
                             break;
@@ -166,4 +157,128 @@ int main() {
 }
 
 
+
+void obtener_tipos_energia(char* nombre_archivo, char tipos_energia[][MAX_LONGITUD_LINEA]) {
+    FILE *archivo = fopen(nombre_archivo, "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    char linea[MAX_LONGITUD_LINEA];
+    char *token;
+    int num_tipos_energia = 0;
+    int num_lineas_leidas = 0;
+
+    while (fgets(linea, MAX_LONGITUD_LINEA, archivo) != NULL) {
+        if (num_lineas_leidas >= 5) {
+            token = strtok(linea, ",");
+            if (token != NULL) {
+                strcpy(tipos_energia[num_tipos_energia++], token);
+            }
+        }
+        num_lineas_leidas++;
+    }
+
+    fclose(archivo);
+}
+
+void imprimir_tipos_energia(char tipos_energia[][MAX_LONGITUD_LINEA], int num_tipos_energia) {
+    for (int i = 0; i < num_tipos_energia; i++) {
+        printf("%i.%s\n", i+1, tipos_energia[i]);
+    }
+}
+
+void mostrar_datos_numericos(char* nombre_archivo, int opcion) {
+    FILE* archivo = fopen(nombre_archivo, "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    char linea[MAX_LONGITUD_LINEA];
+    int contador = 0;
+    int contador_energias = 0;
+    int energia_seleccionada = opcion - 1;
+
+    while (fgets(linea, MAX_LONGITUD_LINEA, archivo) != NULL) {
+        if (contador >= 5) {
+            if (contador_energias == energia_seleccionada) {
+                printf("\n\nDatos de la energía seleccionada:\n");
+                printf("%s", linea);
+                break;
+            }
+            contador_energias++;
+        }
+
+        contador++;
+    }
+
+    fclose(archivo);
+}
+
+void ordenar_datos(Dato datos[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (datos[j].valor < datos[j + 1].valor) {
+                Dato temp = datos[j];
+                datos[j] = datos[j + 1];
+                datos[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void mostrar_meses(char *nombre_archivo) {
+    FILE *archivo = fopen(nombre_archivo, "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    char linea[BUFF_SIZE];
+
+    for (int i = 0; i < 4; i++) {
+        fgets(linea, BUFF_SIZE, archivo);
+    }
+
+    fgets(linea, BUFF_SIZE, archivo);
+    char *token = strtok(linea, ",");
+    char meses[MAX_COLS][10];
+    int i = 0;
+    while (token != NULL && i < MAX_COLS) {
+        strcpy(meses[i], token);
+        token = strtok(NULL, ",");
+        i++;
+    }
+
+    for (int i = 0; i < 16; i++) {
+        fgets(linea, BUFF_SIZE, archivo);
+    }
+
+    fgets(linea, BUFF_SIZE, archivo);
+    token = strtok(linea, ",");
+    float gen_total[MAX_COLS];
+    i = 0;
+    while (token != NULL && i < MAX_COLS) {
+        gen_total[i] = atof(token);
+        token = strtok(NULL, ",");
+        i++;
+    }
+
+    fclose(archivo);
+
+    Dato datos_combinados[MAX_COLS];
+    for (int j = 0; j < MAX_COLS; j++) {
+        datos_combinados[j].valor = gen_total[j];
+        strcpy(datos_combinados[j].mes, meses[j]);
+    }
+
+    ordenar_datos(datos_combinados, MAX_COLS);
+
+    printf("Meses con sus respectivas generaciones totales(ordenados de mayor a menor):\n");
+    for (int j = 0; j < MAX_COLS; j++) {
+        printf("%s: %.2f\n", datos_combinados[j].mes, datos_combinados[j].valor);
+    }
+}
 
