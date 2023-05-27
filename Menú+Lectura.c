@@ -52,11 +52,11 @@ int main() {
         fgets(linea, BUFF_SIZE, pf);
         char *token = strtok(linea, separador);
         strncpy(registros[i].tipo, token, BUFF_SIZE);
-        printf("\n%s:\n", registros[i].tipo);
+        //printf("\n%s:\n", registros[i].tipo);
         for(int j = 0; j<MESES; j++){
             token = strtok(NULL, separador);
             registros[i].valor[j] = atof(token);
-            printf("%f, ", registros[i].valor[j]);
+            //printf("%f, ", registros[i].valor[j]);
         }
     }
 
