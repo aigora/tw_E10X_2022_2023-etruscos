@@ -155,8 +155,8 @@ int main() {
                     printf("Por favor seleccione entre uno de los años para un estudio mas detallado:\n");
                     //funcion para imprimir los años
                     //no tengo muy claro la parte de escanear a mano (mejor opciones numeradas?)
-                    printf("A continuacion indique que desea evaluar de el año escogido:\n1.-Energia mas consumida en el año\n2.-Media de gastos anuales\n");
-                    printf("3.-Mes de mayor consumicion en el año\n4.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir\n");
+                    printf("A continuacion indique que desea evaluar de el año escogido:\n1.-Energia mas consumida en el año 2021\n2.-Energia mas consumida en el año 2022\n");
+                    printf("3.-Media de gastos del año 2021\n4.-Media de gastos del año 2022\n5.-Mes con mayor consumicion en el año 2021\n6.-Mes con mayor consumicion en el año\n7.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir\n");
                     scanf("%i", &op1);
 
                     switch (op1) {
@@ -170,9 +170,18 @@ int main() {
                             printf("Ha seleccionado la opción 3.3\n");
                             break;
                         case 4:
-                            mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
+                            printf("Ha seleccionado la opción 3.4\n");
                             break;
                         case 5:
+                            printf("Ha seleccionado la opción 3.5\n");
+                            break;
+                        case 6:
+                            printf("Ha seleccionado la opción 3.6\n");
+                            break;     
+                        case 7:
+                            mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
+                            break;
+                        case 8:
                             break;
                         default:
                             printf("Opción inválida. Por favor, elija nuevamente.\n");
