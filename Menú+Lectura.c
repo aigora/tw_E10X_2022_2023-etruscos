@@ -88,18 +88,19 @@ int main() {
     setlocale(LC_ALL, "");
 
     while (1) {
-        printf("\nSeleccione a que tipo de dato quiere acceder\n");
-        printf("1.-Fecha\n2.-Tipo de energia\n3.-Año\n");
-        printf("Ingrese el numero de su eleccion: ");
+        printf("\n\n\t******************************\n\t\t BIENVENIDO \n\t******************************\n\n\t\t ETRUSCOS\n\n\t    Estudio de energias\n\n\t******************************\n\n");
+        printf("\n  Seleccione a que tipo de dato quiere acceder\n\n");
+        printf("\t1.-Fecha\n\n\t2.-Tipo de energia\n\n\t3.-Año\n\n");
+        printf("  Ingrese el numero de su eleccion: ");
         scanf("%d", &op);
 
         switch (op) {
             case 1:
 
                 while (1) {
-                    printf("Que desea hacer con las fechas:\n");
-                    printf("1.-Comparar dos fechas\n2.-Consumo total de un mes especifico\n3.-Salir\n");
-                    scanf("%i", &op1);
+                    printf("\n Que desea hacer con las fechas:\n\n");
+                    printf("\t1.-Comparar dos fechas\n\t2.-Consumo total de un mes especifico\n\t3.-Salir\n");
+                    scanf("  %i", &op1);
 
                     switch (op1) {
                         case 1:
@@ -135,7 +136,7 @@ int main() {
                     return 0;
                     }
 
-                    printf("Que desea hacer con esta energia:\n1.-Media mensual de gastos\n2.-Comparar 2 energias\n3.-Mostrar datos\n4.-Mes y año de menor gasto\n5.-Mes y año de mayor gasto\n6.-Salir\n");
+                    printf("\n Que desea hacer con esta energia:\n\n\t1.-Media mensual de gastos\n\t2.-Comparar 2 energias\n\t3.-Mostrar datos\n\t4.-Mes y año de menor gasto\n\t5.-Mes y año de mayor gasto\n\n\t6.-Salir\n");
                     scanf("%i", &op1);
 
                     switch (op1) {
@@ -165,36 +166,34 @@ int main() {
 
                 break;
 
-            case 3:
+           case 3:
                 while (1) {
-                    printf("Por favor seleccione entre uno de los años para un estudio mas detallado:\n");
-                    //funcion para imprimir los años
-                    //no tengo muy claro la parte de escanear a mano (mejor opciones numeradas?)
-                    printf("A continuacion indique que desea evaluar de el año escogido:\n1.-Energia mas consumida en el año 2021\n2.-Energia mas consumida en el año 2022\n");
-                    printf("3.-Media de gastos del año 2021\n4.-Media de gastos del año 2022\n5.-Mes con mayor consumo en el año 2021\n6.-Mes con mayor consumo en el año 2022\n7.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir\n");
+                    printf("\nA continuacion escoja una de las siguientes opciones:\n\n\t1.-Ordenar los meses en funcion de cuando se gasta mas\n\n");
+                    printf("\n\n\t2.-Energias ordenadas de mayor a menor en funcion del gasto en el año 2021\n\t3.-Media de gastos del año 2021\n\t4.-Mes con mayor consumo en el año 2021\n\n");
+                    printf("\n\n\t5.-Energias ordenadas de mayor a menor en funcion del gasto en el año 2022\n\t6.-Media de gastos del año 2022\n\t7.-Mes con mayor consumo en el año 2022\n\n\n\t8.-Salir\n");
                     scanf("%i", &op1);
 
                     switch (op1) {
                         case 1:
-                            Energiaconsumida2021(nombre_archivo);
+                            mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
                             break;
                         case 2:
-                            Energiaconsumida2022(nombre_archivo);
+                            Energiaconsumida2021(nombre_archivo);
                             break;
                         case 3:
                             calcularMediaGasto2021();
                             break;
                         case 4:
-                            calcularMediaGasto2022();
-                            break;
-                        case 5:
                             MesConMayorConsumo2021();
                             break;
+                        case 5:
+                            Energiaconsumida2022(nombre_archivo);
+                            break;
                         case 6:
-                            MesConMayorConsumo2022();
+                            calcularMediaGasto2022();
                             break;
                         case 7:
-                            mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
+                            MesConMayorConsumo2022();
                             break;
                         case 8:
                             break;
@@ -220,7 +219,6 @@ int main() {
 
     return 0;
 }
-
 
 
 void obtener_tipos_energia(char* nombre_archivo, char tipos_energia[][MAX_LONGITUD_LINEA]) {
