@@ -169,7 +169,7 @@ int main() {
 
                     switch (op1) {
                         case 1:
-                            printf("Ha seleccionado la opción 3.1\n");
+                            Energiaconsumida2021(nombre_archivo);
                             break;
                         case 2:
                             printf("Ha seleccionado la opción 3.2\n");
