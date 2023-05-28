@@ -34,7 +34,8 @@ void ordenar_datos(Dato datos[], int n);
 void mostrar_meses(char *nombre_archivo);
 void media_mensual(int energia, Registro *registros);
 void clasificacion(EnergiaDatos orden[], int size);
-void Energiaconsumida2021(char* nombre_archivo)
+void Energiaconsumida2021(char* nombre_archivo);
+void Energiaconsumida2022(char* nombre_archivo);
 
 
 
@@ -172,7 +173,7 @@ int main() {
                             Energiaconsumida2021(nombre_archivo);
                             break;
                         case 2:
-                            printf("Ha seleccionado la opción 3.2\n");
+                            Energiaconsumida2022(nombre_archivo);
                             break;
                         case 3:
                             printf("Ha seleccionado la opción 3.3\n");
@@ -395,7 +396,6 @@ void Energiaconsumida2021(char* nombre_archivo) {
             sum += value;
         }
 
-
         // Almacenar el nombre y la suma 
         EnergiaDatos energiaDatos;
         strncpy(energiaDatos.nombre, col, sizeof(energiaDatos.nombre));
@@ -404,6 +404,57 @@ void Energiaconsumida2021(char* nombre_archivo) {
         cont++;
     }
 
+    // Ordenar de mayor a menor
+    clasificacion(ordenEnergia, cont);
+
+    // Imprimir el resultado ordenado i=1 para que no tenga en cuenta la generacion total que es la suma de todas las energias
+    for (int i = 1; i < cont; i++) {
+        printf("%s: %.2f\n", ordenEnergia[i].nombre, ordenEnergia[i].sum);
+    }
+
+    // Cerrar el archivo
+    fclose(archivo);
+}
+void Energiaconsumida2022(char* nombre_archivo) {
+    // Abrir el archivo CSV en modo lectura
+    FILE* archivo = fopen(nombre_archivo, "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    char linea[MAX_LONG_LINEA];
+    char* token;
+
+     // Ignorar las 5 primeras filas
+    for (int i = 0; i < 5; i++) {
+        fgets(line, sizeof(line), archivo);
+    }
+    // Leer las filas restantes y realizar los cálculos
+    EnergiaDatos ordenEnergia[MAX_LONG_LINEA];
+    int cont = 0;
+
+     while (fgets(line, sizeof(line), archivo)) {
+        // Obtener el nombre del tipo de energía
+        char col[MAX_LONG_COL];
+        token = strtok(line, ",");
+        strncpy(col, token, sizeof(col));
+
+        // Sumar los valores de las 12 celdas del año 2022
+        double sum = 0.0;
+        for (int i = 13; i < 25; i++) {
+            token = strtok(NULL, ",");
+            double value = atof(token);
+            sum += value;
+        }
+
+        // Almacenar el nombre y la suma 
+        EnergiaDatos energiaDatos;
+        strncpy(energiaDatos.nombre, col, sizeof(energiaDatos.nombre));
+        energiaDatos.sum = sum;
+        ordenEnergia[cont] = energiaDatos;
+        cont++;
+    }
 
     // Ordenar de mayor a menor
     clasificacion(ordenEnergia, cont);
