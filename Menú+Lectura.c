@@ -9,6 +9,9 @@
 #define MESES 24
 #define BUFF_SIZE 1024
 #define MAX_LONG_COL 100
+#define MAX_LONG_LINEA 1024
+#define MES_MAX_CONS 12
+#define MES_MAX 12
 
 typedef struct {
     float valor;
@@ -35,6 +38,7 @@ void media_mensual(int energia, Registro *registros);
 void clasificacion(EnergiaDatos orden[], int size);
 void Energiaconsumida2021(char* nombre_archivo);
 void Energiaconsumida2022(char* nombre_archivo);
+void MesConMayorConsumo2021();
 
 
 
@@ -164,7 +168,7 @@ int main() {
                     //funcion para imprimir los años
                     //no tengo muy claro la parte de escanear a mano (mejor opciones numeradas?)
                     printf("A continuacion indique que desea evaluar de el año escogido:\n1.-Energia mas consumida en el año 2021\n2.-Energia mas consumida en el año 2022\n");
-                    printf("3.-Media de gastos del año 2021\n4.-Media de gastos del año 2022\n5.-Mes con mayor consumicion en el año 2021\n6.-Mes con mayor consumicion en el año\n7.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir\n");
+                    printf("3.-Media de gastos del año 2021\n4.-Media de gastos del año 2022\n5.-Mes con mayor consumo en el año 2021\n6.-Mes con mayor consumo en el año 2022\n7.-Ordenar los meses en funcion de cuando se gasta mas\n5.-Salir\n");
                     scanf("%i", &op1);
 
                     switch (op1) {
@@ -175,17 +179,17 @@ int main() {
                             Energiaconsumida2022(nombre_archivo);
                             break;
                         case 3:
-                            printf("Ha seleccionado la opción 3.3\n");
+
                             break;
                         case 4:
                             printf("Ha seleccionado la opción 3.4\n");
                             break;
                         case 5:
-                            printf("Ha seleccionado la opción 3.5\n");
+                            MesConMayorConsumo2021();
                             break;
                         case 6:
                             printf("Ha seleccionado la opción 3.6\n");
-                            break;     
+                            break;
                         case 7:
                             mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
                             break;
@@ -194,6 +198,7 @@ int main() {
                         default:
                             printf("Opción inválida. Por favor, elija nuevamente.\n");
                             continue;
+
                     }
                     break;
                 }
@@ -461,6 +466,56 @@ void Energiaconsumida2022(char* nombre_archivo) {
     // Imprimir el resultado ordenado i=1 para que no tenga en cuenta la generacion total que es la suma de todas las energias
     for (int i = 1; i < cont; i++) {
         printf("%s: %.2f\n", ordenEnergia[i].nombre, ordenEnergia[i].sum);
+    }
+
+    // Cerrar el archivo
+    fclose(archivo);
+}
+void MesConMayorConsumo2021() {
+    // Abrir el archivo CSV para lectura
+    FILE *archivo = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv", "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    // Ignorar las primeras filas hasta llegar a los meses
+    char linea[MAX_LONG_LINEA];
+    for (int i = 0; i < 4; i++) {
+        fgets(linea, MAX_LONG_LINEA, archivo);
+    }
+
+    // Leer los nombres de los meses
+    char *meses[MES_MAX];
+    fgets(linea, MAX_LONG_LINEA, archivo);
+    char *token = strtok(linea, ",");
+    int contador_mes = 0;
+    while (token != NULL && contador_mes < MES_MAX) {
+        meses[contador_mes] = strdup(token);
+        token = strtok(NULL, ",");
+        contador_mes++;
+    }
+
+    // Leer los datos de consumo y encontrar el mes con mayor consumo
+    double max_consumo = 0.0;
+    int max_lista_meses = -1;
+    while (fgets(linea, MAX_LONG_LINEA, archivo) != NULL) {
+        char *token = strtok(linea, ",");
+        int lista_meses = 0;
+        while (token != NULL && lista_meses < contador_mes) {
+            double consumo = atof(token);
+            if (consumo > max_consumo) {
+                max_consumo = consumo;
+                max_lista_meses = lista_meses;
+            }
+            token = strtok(NULL, ",");
+            lista_meses++;
+        }
+    }
+
+    // Imprimir el mes con mayor consumo
+    if (max_lista_meses != -1) {
+        printf("El mes con mayor consumo es %s\n", meses[max_lista_meses]);
     }
 
     // Cerrar el archivo
