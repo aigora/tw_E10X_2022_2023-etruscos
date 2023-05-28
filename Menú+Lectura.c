@@ -11,7 +11,8 @@
 #define MAX_LONG_COL 100
 #define MAX_LONG_LINEA 1024
 #define MES_MAX_CONS 12
-#define MES_MAX 12
+#define MES_MAX_2021 12
+#define MES_MAX_2022 24
 
 typedef struct {
     float valor;
@@ -39,6 +40,7 @@ void clasificacion(EnergiaDatos orden[], int size);
 void Energiaconsumida2021(char* nombre_archivo);
 void Energiaconsumida2022(char* nombre_archivo);
 void MesConMayorConsumo2021();
+void MesConMayorConsumo2022();
 
 
 
@@ -188,7 +190,7 @@ int main() {
                             MesConMayorConsumo2021();
                             break;
                         case 6:
-                            printf("Ha seleccionado la opción 3.6\n");
+                            MesConMayorConsumo2022();
                             break;
                         case 7:
                             mostrar_meses("generacion_por_tecnologias_21_22_puntos_simplificado.csv");
@@ -486,11 +488,61 @@ void MesConMayorConsumo2021() {
     }
 
     // Leer los nombres de los meses
-    char *meses[MES_MAX];
+    char *meses[MES_MAX_2021];
     fgets(linea, MAX_LONG_LINEA, archivo);
     char *token = strtok(linea, ",");
     int contador_mes = 0;
-    while (token != NULL && contador_mes < MES_MAX) {
+    while (token != NULL && contador_mes < MES_MAX_2021) {
+        meses[contador_mes] = strdup(token);
+        token = strtok(NULL, ",");
+        contador_mes++;
+    }
+
+    // Leer los datos de consumo y encontrar el mes con mayor consumo
+    double max_consumo = 0.0;
+    int max_lista_meses = -1;
+    while (fgets(linea, MAX_LONG_LINEA, archivo) != NULL) {
+        char *token = strtok(linea, ",");
+        int lista_meses = 0;
+        while (token != NULL && lista_meses < contador_mes) {
+            double consumo = atof(token);
+            if (consumo > max_consumo) {
+                max_consumo = consumo;
+                max_lista_meses = lista_meses;
+            }
+            token = strtok(NULL, ",");
+            lista_meses++;
+        }
+    }
+
+    // Imprimir el mes con mayor consumo
+    if (max_lista_meses != -1) {
+        printf("El mes con mayor consumo es %s\n", meses[max_lista_meses]);
+    }
+
+    // Cerrar el archivo
+    fclose(archivo);
+}
+void MesConMayorConsumo2022() {
+    // Abrir el archivo CSV para lectura
+    FILE *archivo = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv", "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    // Ignorar las primeras filas hasta llegar a los meses
+    char linea[MAX_LONG_LINEA];
+    for (int i = 0; i < 4; i++) {
+        fgets(linea, MAX_LONG_LINEA, archivo);
+    }
+
+    // Leer los nombres de los meses
+    char *meses[MES_MAX_2022];
+    fgets(linea, MAX_LONG_LINEA, archivo);
+    char *token = strtok(linea, ",");
+    int contador_mes = 0;
+    while (token != NULL && contador_mes < MES_MAX_2022) {
         meses[contador_mes] = strdup(token);
         token = strtok(NULL, ",");
         contador_mes++;
