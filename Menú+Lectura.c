@@ -364,7 +364,7 @@ void mostrar_meses(char *nombre_archivo) {
     ordenar_datos(datos_combinados, MAX_COLS);
 
     printf("Meses con sus respectivas generaciones totales(ordenados de mayor a menor):\n");
-    for (int j = 0; j < MAX_COLS; j++) {
+    for (int j = 0; j < MAX_COLS-1; j++) {
         printf("%s: %.2f\n", datos_combinados[j].mes, datos_combinados[j].valor);
     }
 }
