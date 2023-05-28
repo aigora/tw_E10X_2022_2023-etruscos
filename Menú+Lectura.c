@@ -43,7 +43,13 @@ void MesConMayorConsumo2021();
 void MesConMayorConsumo2022();
 void calcularMediaGasto2021();
 void calcularMediaGasto2022();
-
+void mes_max(int energia, Registro *registros);
+void mes_min(int energia, Registro *registros);
+void mostrarFechasDisponibles();
+int pedirFechaDeseada();
+void validarFecha(int fecha);
+void calcularConsumo(Registro registros[], int fecha1, int fecha2);
+float calcularConsumoTotal(Registro registros[], int fechaSeleccionada);
 
 
 int main() {
@@ -104,12 +110,28 @@ int main() {
 
                     switch (op1) {
                         case 1:
-                            printf("Ha seleccionado la opción 1.1\n");
+                            printf("Ha seleccionado la opción comparar dos fechas\n");
                             //comparar fechas
+                            int fecha1, fecha2;
+
+                            mostrarFechasDisponibles();
+                            fecha1 = pedirFechaDeseada();
+                            validarFecha(fecha1);
+                            fecha2 = pedirFechaDeseada();
+                            validarFecha(fecha2);
+                            calcularConsumo(registros, fecha1 - 1, fecha2 - 1);
                             break;
                         case 2:
-                            printf("Ha seleccionado la opción 1.2\n");
+                            printf("Ha seleccionado la opción consumo total de un mes especifico\n");
                             //consumo total de un mes
+                            int fechaSeleccionada;
+
+                            mostrarFechasDisponibles();
+                            fechaSeleccionada = pedirFechaDeseada();
+                            validarFecha(fechaSeleccionada);
+                            float consumoTotal = calcularConsumoTotal(registros, fechaSeleccionada);
+
+                            printf("El consumo total de energía para el mes %d es: %.2f\n", fechaSeleccionada, consumoTotal);
                             break;
                         case 3:
                             break;
@@ -150,10 +172,12 @@ int main() {
                             mostrar_datos_numericos(nombre_archivo, opcion_energia);
                             break;
                         case 4:
-                            printf("Ha seleccionado la opción 2.4\n");
+                            printf("Ha seleccionado la opción mes y año de menor gasto\n");
+                            mes_min(opcion_energia,registros);
                             break;
                         case 5:
-                            printf("Ha seleccionado la opción 2.5\n");
+                            printf("Ha seleccionado la opción mes y año de mayor gasto\n");
+                            mes_max(opcion_energia, registros);
                             break;
                         case 6:
                             break;
@@ -657,4 +681,111 @@ void calcularMediaGasto2022() {
 
     // Cerrar el archivo
     fclose(archivo);
+}
+void mes_max(int energia, Registro *registros){
+float aux=0, resultado=0;
+int indice_fecha = 0;
+energia = energia - 1;
+    for(int j = 0; j < MESES ; j++){
+        if(registros[energia].valor[j] > aux){
+            //printf("\n%f es mayor que %f", registros[energia].valor[j], aux);
+            aux = registros[energia].valor[j];
+            indice_fecha = j+1;
+
+        }
+    }
+    resultado = aux;
+    int indice_fecha2;
+    if(indice_fecha > 12){
+        indice_fecha2 = indice_fecha-12;
+        printf("\nEl mes con mayor consumo de %s es el %d/22. Se consumió %f", registros[energia].tipo, indice_fecha2, registros[energia].valor[indice_fecha-1]);
+    }
+    else{
+    printf("\nEl mes con mayor consumo de %s es el %d/21. Se consumió %f", registros[energia].tipo, indice_fecha, registros[energia].valor[indice_fecha-1]);
+    }
+
+
+}
+
+void mes_min(int energia, Registro *registros){
+float aux=0, resultado=0;
+int indice_fecha = 0;
+energia = energia - 1;
+aux=registros[energia].valor[0];
+    for(int j = 0; j < MESES ; j++){
+        if(registros[energia].valor[j] < aux){
+            //printf("\n%f es mayor que %f", registros[energia].valor[j], aux);
+            aux = registros[energia].valor[j];
+            indice_fecha = j+1;
+
+        }
+    }
+    resultado = aux;
+    int indice_fecha2;
+    if(indice_fecha > 12){
+        indice_fecha2 = indice_fecha-12;
+        printf("\nEl mes con menor consumo de %s es el %d/22. Se consumió %f", registros[energia].tipo, indice_fecha2, registros[energia].valor[indice_fecha-1]);
+    }
+    else{
+    printf("\nEl mes con menor consumo de %s es el %d/21. Se consumió %f", registros[energia].tipo, indice_fecha, registros[energia].valor[indice_fecha-1]);
+    }
+
+
+}
+void mostrarFechasDisponibles() {
+    printf("Fechas disponibles:\n");
+    for (int i = 0; i < MESES; i++) {
+        if (i != 21) {
+            int mes = (i % 12) + 1;
+            int anio = 2021 + (i / 12);
+            printf("%d. %d-%d\n", i + 1, mes, anio);
+        }
+    }
+}
+
+int pedirFechaDeseada() {
+    int fecha;
+    printf("Ingrese la fecha deseada (1-%d): ", MESES);
+    scanf("%d", &fecha);
+    return fecha;
+}
+
+void validarFecha(int fecha) {
+    if (fecha < 1 || fecha > MESES) {
+        printf("Fecha no válida.\n");
+        exit(1);
+    }
+}
+
+void calcularConsumo(Registro registros[], int fecha1, int fecha2) {
+    float consumo1 = 0.0;
+    float consumo2 = 0.0;
+
+    for (int i = 1; i < NUM_REGISTROS; i++) {
+        consumo1 += registros[i].valor[fecha1];
+        consumo2 += registros[i].valor[fecha2];
+    }
+
+    float promedio1 = consumo1 / 2;
+    float promedio2 = consumo2 / 2;
+
+    printf("\nConsumo total para la fecha %d: %.2f\n", fecha1 + 1, promedio1);
+    printf("Consumo total para la fecha %d: %.2f\n", fecha2 + 1, promedio2);
+}
+
+
+float calcularConsumoTotal(Registro registros[], int fechaSeleccionada) {
+    float consumoTotal = 0.0;
+    int indiceFecha = fechaSeleccionada - 1;
+
+    // Calcular el consumo total de energía para la fecha seleccionada
+    for (int i = 0; i < NUM_REGISTROS; i++) {
+        if (i != 21) {
+            consumoTotal += registros[i].valor[indiceFecha];
+        }
+    }
+
+    consumoTotal /= 2.0; // Dividir el resultado entre 2
+
+    return consumoTotal;
 }
