@@ -370,7 +370,7 @@ void Energiaconsumida2021(char* nombre_archivo) {
         return;
     }
 
-    char linea[MAX_LONGITUD_LINEA];
+    char line[MAX_LONGITUD_LINEA];
     char* token;
 
      // Ignorar las 5 primeras filas
@@ -422,7 +422,7 @@ void Energiaconsumida2022(char* nombre_archivo) {
         return;
     }
 
-    char linea[MAX_LONGITUD_LINEA];
+    char line[MAX_LONGITUD_LINEA];
     char* token;
 
      // Ignorar las 5 primeras filas
