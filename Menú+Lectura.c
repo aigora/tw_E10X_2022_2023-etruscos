@@ -50,6 +50,8 @@ int pedirFechaDeseada();
 void validarFecha(int fecha);
 void calcularConsumo(Registro registros[], int fecha1, int fecha2);
 float calcularConsumoTotal(Registro registros[], int fechaSeleccionada);
+void comparar_energias(int energia, Registro *registros);
+
 
 
 int main() {
@@ -167,6 +169,7 @@ int main() {
                             break;
                         case 2:
                             printf("Ha seleccionado la opción 2.2\n");
+                            comparar_energias(opcion_energia, registros);
                             break;
                         case 3:
                             mostrar_datos_numericos(nombre_archivo, opcion_energia);
@@ -425,7 +428,7 @@ void Energiaconsumida2021(char* nombre_archivo) {
             sum += value;
         }
 
-        // Almacenar el nombre y la suma 
+        // Almacenar el nombre y la suma
         EnergiaDatos energiaDatos;
         strncpy(energiaDatos.nombre, col, sizeof(energiaDatos.nombre));
         energiaDatos.sum = sum;
@@ -477,7 +480,7 @@ void Energiaconsumida2022(char* nombre_archivo) {
             sum += value;
         }
 
-        // Almacenar el nombre y la suma 
+        // Almacenar el nombre y la suma
         EnergiaDatos energiaDatos;
         strncpy(energiaDatos.nombre, col, sizeof(energiaDatos.nombre));
         energiaDatos.sum = sum;
@@ -788,4 +791,30 @@ float calcularConsumoTotal(Registro registros[], int fechaSeleccionada) {
     consumoTotal /= 2.0; // Dividir el resultado entre 2
 
     return consumoTotal;
+}
+
+
+
+void comparar_energias(int energia, Registro *registros){
+energia = energia - 1;
+int energia2;
+float resultado1, resultado2, aux1=0, aux2=0;
+printf("¿Con qué energía desea comparar la generación de %s?", registros[energia].tipo);
+scanf("%i", &energia2);
+energia2=energia2-1;
+printf("Ha escogido comparar la generacion de %s y %s", registros[energia].tipo, registros[energia2].tipo);
+for(int x = 0; x < MESES-1; x++){
+    aux1 = registros[energia].valor[x] + aux2;
+    aux2 = aux1;
+}
+resultado1 = aux2;
+printf("\nGeneración anual de %s: %f GWh", registros[energia].tipo, resultado1);
+aux2=0;
+for(int x = 0; x < MESES-1; x++){
+    aux1 = registros[energia2].valor[x] + aux2;
+    aux2 = aux1;
+}
+resultado2 = aux2;
+printf("\nGeneración anual de %s: %f GWh", registros[energia2].tipo,resultado2);
+
 }
