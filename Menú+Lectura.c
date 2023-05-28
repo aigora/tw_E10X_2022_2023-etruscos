@@ -42,6 +42,7 @@ void Energiaconsumida2022(char* nombre_archivo);
 void MesConMayorConsumo2021();
 void MesConMayorConsumo2022();
 void calcularMediaGasto2021();
+void calcularMediaGasto2022();
 
 
 
@@ -184,7 +185,7 @@ int main() {
                             calcularMediaGasto2021();
                             break;
                         case 4:
-                            printf("Ha seleccionado la opción 3.4\n");
+                            calcularMediaGasto2022();
                             break;
                         case 5:
                             MesConMayorConsumo2021();
@@ -601,6 +602,49 @@ void calcularMediaGasto2021() {
     for (int i = 0; i < 13; i++) {
         token = strtok(NULL, ",");
         if (token != NULL && i >= 1 && i <= 12) {
+            double value = atof(token);
+            sum += value;
+            count++;
+        }
+    }
+
+    // Calcular la media y asignar el valor a la variable "media"
+    double media = sum / count;
+
+    // Imprimir el resultado
+    printf("La media de gasto del año 2021 es: %f\n", media);
+
+    // Cerrar el archivo
+    fclose(archivo);
+}
+void calcularMediaGasto2022() {
+    FILE *archivo;
+    char linea[MAX_LONG_LINEA];
+    char *token;
+    double sum = 0.0;
+    int count = 0;
+
+    // Abrir el archivo CSV en modo lectura
+    archivo = fopen("generacion_por_tecnologias_21_22_puntos_simplificado.csv", "r");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo.\n");
+        return;
+    }
+
+    // Leer la fila 22 del archivo
+    for (int i = 0; i < 22; i++) {
+        if (fgets(linea, sizeof(linea), archivo) == NULL) {
+            printf("Error al leer el archivo.\n");
+            fclose(archivo);
+            return;
+        }
+    }
+
+    // Obtener los datos de las celdas 14 a 25 y calcular la media
+    token = strtok(linea, ",");
+    for (int i = 1; i < 25; i++) {
+        token = strtok(NULL, ",");
+        if (token != NULL && i >= 13 && i <= 25) {
             double value = atof(token);
             sum += value;
             count++;
