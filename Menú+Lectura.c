@@ -160,19 +160,18 @@ int main() {
                     return 0;
                     }
 
-                    printf("\n Que desea hacer con esta energia:\n\n\t1.-Media mensual de gastos\n\t2.-Comparar 2 energias\n\t3.-Mostrar datos\n\t4.-Mes y año de menor gasto\n\t5.-Mes y año de mayor gasto\n\n\t6.-Salir\n");
+                    printf("\n Que desea hacer con esta energia:\n\n\t1.-Mostrar datos\n\t2.-Media mensual de gastos\n\t3.-Comparar dos energias\n\t4.-Mes y año de menor gasto\n\t5.-Mes y año de mayor gasto\n\n\t6.-Salir\n");
                     scanf("%i", &op1);
 
                     switch (op1) {
                         case 1:
-                            media_mensual(opcion_energia, registros);
+                            mostrar_datos_numericos(nombre_archivo, opcion_energia);
                             break;
                         case 2:
-                            printf("Ha seleccionado la opción 2.2\n");
-                            comparar_energias(opcion_energia, registros);
+                            media_mensual(opcion_energia, registros);
                             break;
                         case 3:
-                            mostrar_datos_numericos(nombre_archivo, opcion_energia);
+                            comparar_energias(opcion_energia, registros);
                             break;
                         case 4:
                             printf("Ha seleccionado la opción mes y año de menor gasto\n");
@@ -799,7 +798,7 @@ void comparar_energias(int energia, Registro *registros){
 energia = energia - 1;
 int energia2;
 float resultado1, resultado2, aux1=0, aux2=0;
-printf("¿Con qué energía desea comparar la generación de %s?", registros[energia].tipo);
+printf("¿Con qué energía desea comparar la generación de %s\n?", registros[energia].tipo);
 scanf("%i", &energia2);
 energia2=energia2-1;
 printf("Ha escogido comparar la generacion de %s y %s", registros[energia].tipo, registros[energia2].tipo);
