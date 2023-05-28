@@ -8,7 +8,6 @@
 #define NUM_REGISTROS 18
 #define MESES 24
 #define BUFF_SIZE 1024
-#define MAX_LONG_LINEA 1000
 #define MAX_LONG_COL 100
 
 typedef struct {
@@ -371,7 +370,7 @@ void Energiaconsumida2021(char* nombre_archivo) {
         return;
     }
 
-    char linea[MAX_LONG_LINEA];
+    char linea[MAX_LONGITUD_LINEA];
     char* token;
 
      // Ignorar las 5 primeras filas
@@ -379,7 +378,7 @@ void Energiaconsumida2021(char* nombre_archivo) {
         fgets(line, sizeof(line), archivo);
     }
     // Leer las filas restantes y realizar los cálculos
-    EnergiaDatos ordenEnergia[MAX_LONG_LINEA];
+    EnergiaDatos ordenEnergia[MAX_LONGITUD_LINEA];
     int cont = 0;
 
      while (fgets(line, sizeof(line), archivo)) {
@@ -423,7 +422,7 @@ void Energiaconsumida2022(char* nombre_archivo) {
         return;
     }
 
-    char linea[MAX_LONG_LINEA];
+    char linea[MAX_LONGITUD_LINEA];
     char* token;
 
      // Ignorar las 5 primeras filas
@@ -431,7 +430,7 @@ void Energiaconsumida2022(char* nombre_archivo) {
         fgets(line, sizeof(line), archivo);
     }
     // Leer las filas restantes y realizar los cálculos
-    EnergiaDatos ordenEnergia[MAX_LONG_LINEA];
+    EnergiaDatos ordenEnergia[MAX_LONGITUD_LINEA];
     int cont = 0;
 
      while (fgets(line, sizeof(line), archivo)) {
