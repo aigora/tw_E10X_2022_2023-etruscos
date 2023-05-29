@@ -285,6 +285,14 @@ void mostrar_datos_numericos(char* nombre_archivo, int opcion) {
         return;
     }
 
+    // Crear un nuevo archivo CSV para guardar los datos
+    FILE* archivo_csv = fopen("datos_numericos.csv", "w");
+    if (archivo_csv == NULL) {
+        printf("Error al crear el archivo.\n");
+        fclose(archivo);
+        return;
+    }
+
     char linea[MAX_LONGITUD_LINEA];
     int contador = 0;
     int contador_energias = 0;
@@ -293,8 +301,8 @@ void mostrar_datos_numericos(char* nombre_archivo, int opcion) {
     while (fgets(linea, MAX_LONGITUD_LINEA, archivo) != NULL) {
         if (contador >= 5) {
             if (contador_energias == energia_seleccionada) {
-                printf("\n\nDatos de la energía seleccionada:\n");
-                printf("%s", linea);
+                fprintf(archivo_csv, "Datos de la energía seleccionada:\n");
+                fprintf(archivo_csv, "%s", linea);
                 break;
             }
             contador_energias++;
@@ -304,6 +312,7 @@ void mostrar_datos_numericos(char* nombre_archivo, int opcion) {
     }
 
     fclose(archivo);
+    fclose(archivo_csv);
 }
 
 void ordenar_datos(Dato datos[], int n) {
@@ -322,6 +331,14 @@ void mostrar_meses(char *nombre_archivo) {
     FILE *archivo = fopen(nombre_archivo, "r");
     if (archivo == NULL) {
         printf("No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    // Crear un nuevo archivo CSV para guardar los datos
+    FILE *archivo_csv = fopen("Generacion_mayor_menor.txt", "w");
+    if (archivo_csv == NULL) {
+        printf("Error al crear el archivo CSV.\n");
+        fclose(archivo);
         return;
     }
 
@@ -365,10 +382,12 @@ void mostrar_meses(char *nombre_archivo) {
 
     ordenar_datos(datos_combinados, MAX_COLS);
 
-    printf("Meses con sus respectivas generaciones totales(ordenados de mayor a menor):\n");
-    for (int j = 0; j < MAX_COLS-1; j++) {
-        printf("%s: %.2f\n", datos_combinados[j].mes, datos_combinados[j].valor);
+    fprintf(archivo_csv, "Meses con sus respectivas generaciones totales (ordenados de mayor a menor):\n");
+    for (int j = 0; j < MAX_COLS - 1; j++) {
+        fprintf(archivo_csv, "%s:%.2f GWh\n", datos_combinados[j].mes, datos_combinados[j].valor);
     }
+
+    fclose(archivo_csv);
 }
 
 void media_mensual(int energia, Registro *registros){
@@ -381,7 +400,7 @@ for(int x = 0; x < MESES-1; x++){
     aux2 = aux1;
 }
 resultado = aux2/MESES;
-printf("La media mensual de %s es de: %f", registros[energia].tipo, resultado);
+printf("La media mensual de %s es de: %f GWh", registros[energia].tipo, resultado);
 }
 void clasificacion(EnergiaDatos orden[], int size) {
     for (int i = 0; i < size - 1; i++) {
@@ -440,7 +459,7 @@ void Energiaconsumida2021(char* nombre_archivo) {
 
     // Imprimir el resultado ordenado i=1 para que no tenga en cuenta la generacion total que es la suma de todas las energias
     for (int i = 1; i < cont; i++) {
-        printf("%s: %.2f\n", ordenEnergia[i].nombre, ordenEnergia[i].sum);
+        printf("%s: %.2f GWh\n", ordenEnergia[i].nombre, ordenEnergia[i].sum);
     }
 
     // Cerrar el archivo
@@ -492,7 +511,7 @@ void Energiaconsumida2022(char* nombre_archivo) {
 
     // Imprimir el resultado ordenado i=1 para que no tenga en cuenta la generacion total que es la suma de todas las energias
     for (int i = 1; i < cont; i++) {
-        printf("%s: %.2f\n", ordenEnergia[i].nombre, ordenEnergia[i].sum);
+        printf("%s: %.2f GWh\n", ordenEnergia[i].nombre, ordenEnergia[i].sum);
     }
 
     // Cerrar el archivo
@@ -636,7 +655,7 @@ void calcularMediaGasto2021() {
     double media = sum / count;
 
     // Imprimir el resultado
-    printf("La media de gasto del año 2021 es: %f\n", media);
+    printf("La media de gasto del año 2021 es: %0.2f GWh\n", media);
 
     // Cerrar el archivo
     fclose(archivo);
@@ -679,7 +698,7 @@ void calcularMediaGasto2022() {
     double media = sum / count;
 
     // Imprimir el resultado
-    printf("La media de gasto del año 2021 es: %f\n", media);
+    printf("La media de gasto del año 2021 es: %0.2f GWh\n", media);
 
     // Cerrar el archivo
     fclose(archivo);
